@@ -1,92 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="apple-touch-icon" sizes="76x76" href="./img/icon76.png">
-<link rel="icon" type="image/png" href="./img/icon96.png">
-<title>Dog care</title>
-<link rel="stylesheet" href="./css/bootstrap.min.css">
-<script src="./js/jquery.min.js" type="text/javascript"></script>
-<script src="./js/popper.min.js" type="text/javascript"></script>
-<script src="./js/bootstrap.min.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Camera Web App</title>
+    <style>
+        html, body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
 
-<link href="./css/login-register.css" rel="stylesheet" />
-<script src="./js/login-register.js" type="text/javascript"></script>
+        #header{
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            z-index: 999;
+            color: white;
+            text-align: center;
+            transform: translate(-50%, -50%);
+        }
 
-<link rel="stylesheet" type="text/css" href="./css/jquery-ui.css">
-<script type="text/javaScript" src="./js/jquery-ui.js"></script>
+        #header > p {
+            font-size: 0.9em;
+        }
 
-<link rel="stylesheet" type="text/css" href="./css/paper-dashboard.css?v=2.0.0"/>
-<link href="./font-awesome/css/all.css" rel="stylesheet">
+        #camera, #camera--view, #camera--sensor, #camera--output{
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
 
-<link href="./css/animate.css" rel="stylesheet" />
-<!--
-<script type="text/javaScript" src="./js/wow.js"></script>
--->
-<style type="text/css">
-#services .box {
-    padding: 30px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    margin: 0 10px 40px;
-    background: #fff;
-    box-shadow: 0 10px 29px 0 rgba(68,88,144,.1);
-    transition: all .3s ease-in-out;
-    text-align: center;
-}
+        #camera--view, #camera--sensor, #camera--output{
+            transform: scaleX(-1);
+            filter: FlipH;
+        }
 
-#services .icon {
-    margin: 0 auto 15px;
-    padding-top: 12px;
-    display: inline-block;
-    text-align: center;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-}
-#services .description {
-    font-size: 14px;
-    line-height: 28px;
-    margin-bottom: 0;
-    text-align: center;
-}
+        #camera--trigger{
+            width: 180px;
+            color: white;
+            background-color: black;
+            font-size: 16px;
+            border-radius: 30px;
+            border: none;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 5px 10px 0 rgba(0,0,0,0, 0.2);
+            position: fixed;
+            bottom: 30px;
+            left: calc(50% - 90px);
+        }
 
-.scale {
-  transform: scale(1);
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -ms-transform: scale(1);
-  -o-transform: scale(1);
-  transition: transform .3s;   
-}
-.scale:hover {
-  transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  -o-transform: scale(1.1);
-}
-</style>
+        .taken {
+            height: 140px!important;
+            width: 220px!important;
+            border: solid 2px rgb(121, 200, 253);
+        }
+    </style>
 </head>
-<body style="background-color:#f4f3ef;">
-<div style="height:30px;"></div>
-<div class="container-fluid" style="min-height:calc(60vh)">
+<body>
+    <div id="header">
+        <h3>Simple Web Camera</h3>
+        <p>버튼을 클릭 하세요.</p>
+    </div>
+    
+    <!-- main 태그는 문서의 주요 내용을 담는 태그이다. 한 문서에 한개 존재 해야 한다.
+        또한 article, aside, header, nav, footer등 요소의 하위에 사용해서는 안된다.
+    -->
+    <main id="camera">
+        
+        <canvas id="camera--sensor"></canvas>
 
-<section id="services" class="section-bg">
-  <div class="container-fluid">
-	<header class="section-header">
-	</header>
+        <!-- 기기의 카메라에 접근하여 영상을 페이지에 재생한다. -->
+        <video id="camera--view" autoplay playsinline></video>
+        
+        <img src="//:0" alt="" id="camera--output">
+
+        <button id="camera--trigger">사진촬영</button>
+
+    </main>
+
+
     <script>
-        $(function(){
-            $('#camera').change(function(e){
-                $('#pic').attr('src', URL.createObjectURL(e.target.files[0]));
-            });
-        });
-    </script>
-    <input type="file" id="camera" name="camera" capture="camera" accept="image/*" />
-    <br/>
-    <img id="pic" style="width:100%;" />
 
-    </html>
+        let constraints = { video: { facingMode: "user"}, audio: false};
+        const cameraView = document.querySelector("#camera--view");
+        const cameraOutput = document.querySelector("#camera--output");
+        const cameraSensor = document.querySelector("#camera--sensor");
+        const cameraTrigger = document.querySelector("#camera--trigger");
+
+
+        function cameraStart(){
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(function(stream){
+                    track = stream.getTracks()[0];
+                    cameraView.srcObject = stream;
+
+                })
+                .catch(function(error){
+                    console.error("카메라에 문제가 있습니다.", error);
+                })
+        }
+
+        //촬영 버튼 클릭 리스너
+        cameraTrigger.addEventListener("click", function(){
+            
+            cameraSensor.width = cameraView.videoWidth; //640으로 정해져서 나오네?
+            cameraSensor.height = cameraView.videoHeight;
+            cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+            cameraOutput.src = cameraSensor.toDataURL("image/webp");
+            cameraOutput.classList.add("taken");
+            console.log(cameraSensor.height);
+        });
+    
+        // 페이지가 로드되면 함수 실행
+        window.addEventListener("load", cameraStart, false);
+    </script>
+</body>
+</html>
