@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=4k87dv6w3r&submodules=geocoder"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=czhqoln82j&submodules=geocoder"></script>
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
@@ -29,6 +29,41 @@
 </div>
 </body>
 <script>
+
+var infowindow = new naver.maps.InfoWindow();
+
+function onSuccessGeolocation(position) { //실행할 함수
+    var location = new naver.maps.LatLng(position.coords.latitude,
+                                         position.coords.longitude);
+
+    map.setCenter(location); // 지도의 중심을 어디로 잡을것인지 설정하는 코드
+    map.setZoom(15); // 지도가 얼만큼 줌 되어있는지 설정하는 코드
+
+    infowindow.setContent('<div style="padding:20px;">' + 'geolocation.getCurrentPosition() 위치' + '</div>');
+	// 마커에 안내해줄 문구
+    infowindow.open(map, location); 
+    console.log('Coordinates: ' + location.toString());
+}
+
+function onErrorGeolocation() { // 오류 시 발생될 예외처리용 함수
+    var center = map.getCenter();
+
+    infowindow.setContent('<div style="padding:20px;">' +
+        '<h5 style="margin-bottom:5px;color:#f00;">Geolocation failed!</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
+
+    infowindow.open(map, center);
+}
+
+$(window).on("load", function() { // 창이 실행되면 현 위치 값 구하는 함수 실행되는 제이쿼리
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+    } else {
+        var center = map.getCenter();
+        infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5></div>');
+        infowindow.open(map, center);
+    }
+})
+
 //지도를 그려주는 함수 실행
 selectMapList();
 
@@ -120,5 +155,6 @@ function moveMap(len, lat) {
         map: map
     });
 }
+
 </script>
 </html>
