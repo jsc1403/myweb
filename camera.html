@@ -1,82 +1,30 @@
+
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="apple-touch-icon" sizes="76x76" href="./img/icon76.png">
-<link rel="icon" type="image/png" href="./img/icon96.png">
-<title>Dog care</title>
-<link rel="stylesheet" href="./css/bootstrap.min.css">
-<script src="./js/jquery.min.js" type="text/javascript"></script>
-<script src="./js/popper.min.js" type="text/javascript"></script>
-<script src="./js/bootstrap.min.js" type="text/javascript"></script>
-
-<link href="./css/login-register.css" rel="stylesheet" />
-<script src="./js/login-register.js" type="text/javascript"></script>
-
-<link rel="stylesheet" type="text/css" href="./css/jquery-ui.css">
-<script type="text/javaScript" src="./js/jquery-ui.js"></script>
-
-<link rel="stylesheet" type="text/css" href="./css/paper-dashboard.css?v=2.0.0"/>
-<link href="./font-awesome/css/all.css" rel="stylesheet">
-
-<link href="./css/animate.css" rel="stylesheet" />
-<!--
-<script type="text/javaScript" src="./js/wow.js"></script>
--->
-<style type="text/css">
-#services .box {
-    padding: 30px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    margin: 0 10px 40px;
-    background: #fff;
-    box-shadow: 0 10px 29px 0 rgba(68,88,144,.1);
-    transition: all .3s ease-in-out;
-    text-align: center;
-}
-
-#services .icon {
-    margin: 0 auto 15px;
-    padding-top: 12px;
-    display: inline-block;
-    text-align: center;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-}
-#services .description {
-    font-size: 14px;
-    line-height: 28px;
-    margin-bottom: 0;
-    text-align: center;
-}
-
-.scale {
-  transform: scale(1);
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -ms-transform: scale(1);
-  -o-transform: scale(1);
-  transition: transform .3s;   
-}
-.scale:hover {
-  transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  -o-transform: scale(1.1);
-}
-</style>
+    <title>Dog Care</title>
+    <link rel="stylesheet" href="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body style="background-color:#f4f3ef;">
-<div style="height:30px;"></div>
-<div class="container-fluid" style="min-height:calc(60vh)">
-
-<section id="services" class="section-bg">
-  <div class="container-fluid">
-	<header class="section-header">
-	</header>
-    <input type="file" accept="image/*;capture=camera"> 
-    </html>
+   
+<body>
+<h1>피부병 판별</h1>
+<div class="agile-its">
+    <div class="w3layouts">
+        <div class="photos-upload-view">
+   
+            <form id="upload" action="/predict" method="POST" enctype="multipart/form-data">
+                <div class="upload-btn-wrapper">
+                    <button class="btn">이미지 업로드</button>
+                    <input type="file" value="Upload" name="image">
+                </div>
+                <input type="submit" value="예측 결과">
+                   
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+   
+</html>
