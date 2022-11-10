@@ -14,7 +14,7 @@
 	<input id="address" type="text" placeholder="검색할 주소">
 	<input id="submit" type="button" value="주소검색">
 </div>
-<div id="map" style="width:1000px;height:500px;"></div>
+<div id="map" style="width:400px;height:500px;"></div>
 <div>
 	<table>
 		<thead>
@@ -123,7 +123,7 @@ function insertAddress(address, latitude, longitude) {
 	$('#mapList').append(mapList);	
 
 	var map = new naver.maps.Map('map', {
-	    center: new naver.maps.LatLng(longitude, latitude),
+	    center: new naver.maps.LatLng(34.812, 126.3922),
 	    zoom: 14
 	});
     var marker = new naver.maps.Marker({
