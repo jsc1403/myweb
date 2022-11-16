@@ -75,22 +75,6 @@ function displayMarker(locPosition, message) {
     map.setCenter(locPosition);      
 }    
 
-function placesSearchCB(data, status, pagination){
-    if(status === kakao.maps.services.Status.OK)
-
-    var bounds = new kakao.maps.LatLngBounds();
-}
-
-var places = new kakao.maps.services.Places();
-
-var callback = function(result, status) {
-    if (status === kakao.maps.services.Status.OK) {
-        console.log(result);
-    }
-};
-
-places.keywordSearch('목포 동물병원', callback);
-
 </script>
 </body>
 </html>
