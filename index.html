@@ -23,8 +23,9 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 var ps = new kakao.maps.services.Places(); 
 
 // 키워드로 장소를 검색합니다
-ps.keywordSearch('동물병원', placesSearchCB); 
-// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+ps.keywordSearch('동물병원', placesSearchCB, {
+    location: new kakao.maps.LatLng(33.450701, 126.570667)
+}); 
 if (navigator.geolocation) {
     
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
