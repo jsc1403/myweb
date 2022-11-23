@@ -1,53 +1,46 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <title>Web Shop Page</title>
- 
-    <!-- 외부 스타일시트 적용 -->
-    <link rel="stylesheet" href="./index.css">
+    <title>DogCare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
     <style>
-	body {
-		background-image:url('1.png');
-		background-color:#D9E5FF;
-		background-size: 1000px 1800px;
-	}
-</style>
+        video {
+            width: 100%;
+            height: auto;
+            max-width: 46%;
+            display: block;
+        }
+
+        * {
+            font-family: 'Hi Melody', cursive;
+        }
+
+        body {
+            background-color: #F0FFF0;
+        }
+    </style>
+
 </head>
 
+<body>
     <header>
         <h1>
-            <img src="./shop.png" width="50" height="50">
-            <a href=""https://jsc1403.github.io/myweb/home.html"">Dog Care</a>
+            <img src="./image/1.png" width="80" height="80">
+            <a>DogCare</a>
         </h1>
     </header>
-<body>
-    <img src="4.png" id=mainImage alt="YsjImage" style="width:1000px;height:500px;">
 
-<script>
-var myImage=document.getElementById("mainImage");
-var imageArray=["6.png","5.png","3.png","4.jpg"];
-var imageIndex=0;
+    <video muted autoplay loop>
+        <source src="video/Clouds.mp4" type="video/mp4">
+        <strong>Your browser does not support the video tag.</strong>
+    </video>
+    
+    <h1 class="display-5 fw-bolder"> <a style="color:green; display:block; width:1000px; height:1000px; text-align:left;">Apps for your family</a></h1>
 
-function changeImage(){
-	myImage.setAttribute("src",imageArray[imageIndex]);
-	imageIndex++;
-	if(imageIndex>=imageArray.length){
-		imageIndex=0;
-	}
-}
-setInterval(changeImage,3000);
-</script>
-    
-    <nav>
-        <ul>
-            <li><a href="https://jsc1403.github.io/myweb/home.html">Home</a></li>
-            <li><a href="https://jsc1403.github.io/myweb/camera.html">Camera</a></li>
-            <li><a href="https://jsc1403.github.io/myweb/">Hospital</a></li>
-            <li><a href="https://dogcare.tistory.com/">Encyclopedia</a></li>
-        </ul>
-    </nav>
-    
 </body>
+
 </html>
